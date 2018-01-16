@@ -34,3 +34,5 @@ C:\Users\zasadil\Desktop\SantaShooter\SantaShooter\bin\Debug\SantaShooter.exe.ma
 C:\Users\zasadil\Desktop\SantaShooter\SantaShooter\bin\Debug\SantaShooter.application
 C:\Users\zasadil\Desktop\SantaShooter\SantaShooter\obj\Debug\SantaShooter.exe.manifest
 C:\Users\zasadil\Desktop\SantaShooter\SantaShooter\obj\Debug\SantaShooter.application
+C:\Users\zasadil\Desktop\SantaShooter\SantaShooter\obj\Debug\Interop.WMPLib.dll
+C:\Users\zasadil\Desktop\SantaShooter\SantaShooter\obj\Debug\SantaShooter.csproj.ResolveComReference.cache

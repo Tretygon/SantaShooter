@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
-
+using WMPLib;
 namespace SantaShooter
 {
 
@@ -39,6 +39,8 @@ namespace SantaShooter
         public Random rng;
         private int score =0;
         private int hp = 3;
+        int m1 = 0;
+        int m2 = 0;
         private delegate void voidHandler();
         event voidHandler GameOver;
         private bool immortality = false;
@@ -72,11 +74,13 @@ namespace SantaShooter
                     Loss();
                 }
             }
-        } 
-
+        }
+        WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
+        MediaPlayer NoisePlayer = new MediaPlayer();
         public MainWindow()
         {
             InitializeComponent();
+            Mouse.OverrideCursor = new Cursor(Environment.CurrentDirectory + @"/Snipe.cur");
             ImmortalityCheckBox.Visibility = Visibility.Hidden;
             Spawner = new DispatcherTimer();
             rng = new Random();
@@ -86,15 +90,16 @@ namespace SantaShooter
             HP1.Source = HP2.Source = HP3.Source = HP4.Source = HP5.Source = Images.hearth;
             UpdateHealth();
         }
+
         public abstract class FallingStuff
         {
             public static readonly int size = 150;
-            
+
             protected MainWindow wnd = (MainWindow)Application.Current.MainWindow;
             public Image img;
             public int speed;
             public PathFigure pathFigure;
-            public  FallingStuff(int start, BitmapImage _img)
+            public FallingStuff(int start, BitmapImage _img)
             {
                 pathFigure = new PathFigure();
                 img = new Image
@@ -107,7 +112,7 @@ namespace SantaShooter
                     VerticalAlignment = VerticalAlignment.Top,
                 };
                 wnd.Griddy.Children.Add(img);
-                
+
             }
             public virtual void Click()
             {
@@ -120,6 +125,23 @@ namespace SantaShooter
             public void Kill()
             {
                 wnd.Griddy.Children.Remove(this.img);
+            }
+            public void PlaySound(string nameAndFormat)
+            {
+                /*
+                new System.Threading.Thread(() => {
+                wnd.Player.URL = Environment.CurrentDirectory + @"/Sounds/" + nameAndFormat;
+                wnd.Player.controls.play();
+                }).Start();
+                */
+
+
+
+                wnd.NoisePlayer.Stop();
+                wnd.NoisePlayer.Open(new Uri(Environment.CurrentDirectory + @"/Sounds/" + nameAndFormat));
+                wnd.NoisePlayer.Play();
+
+            
             }
         }
         public class Santa : FallingStuff
@@ -150,6 +172,7 @@ namespace SantaShooter
             }
             public override void Click()
             {
+                PlaySound($@"Snipe/{(++wnd.m1 % 8) +1}.mp3");
                 wnd.Score++;
                 Kill();
             }
@@ -159,7 +182,6 @@ namespace SantaShooter
                 {
                     wnd.Hp--;
                 }
-                
                 Kill();
             }
         }
@@ -191,6 +213,12 @@ namespace SantaShooter
             }
             public override void Click()
             {
+                int i = (++wnd.m2 % 6) + 1;
+                if (i >8 || i <1)
+                {
+                    throw new Exception();
+                }
+                PlaySound($@"Punch/{(++wnd.m2 % 6) + 1}.mp3");
                 wnd.Hp--;
             }
         }
@@ -222,6 +250,7 @@ namespace SantaShooter
             }
             public override void Click()
             {
+                //PlaySound("Choir.mp3");
                 wnd.Hp++;
                 Kill();
             }
@@ -305,6 +334,7 @@ namespace SantaShooter
             UpdateHealth();
             IsGameOver = false;
         }
+        
         void SpawnAThing()
         {
            //Spawner.Interval = TimeSpan.FromMilliseconds(Spawner.Interval.Milliseconds * 0.995);
