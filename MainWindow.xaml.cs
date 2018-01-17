@@ -75,12 +75,15 @@ namespace SantaShooter
                 }
             }
         }
-        WMPLib.WindowsMediaPlayer Player = new WMPLib.WindowsMediaPlayer();
         MediaPlayer NoisePlayer = new MediaPlayer();
+        MediaPlayer musicPlayer = new MediaPlayer();
         public MainWindow()
         {
             InitializeComponent();
             Mouse.OverrideCursor = new Cursor(Environment.CurrentDirectory + @"/Snipe.cur");
+            musicPlayer.Open(new Uri(@"../../Sounds/JingleBells.mp3", UriKind.Relative));
+            musicPlayer.MediaEnded += (a, b) => { musicPlayer.Position = TimeSpan.Zero; musicPlayer.Play(); };
+            musicPlayer.Play();
             ImmortalityCheckBox.Visibility = Visibility.Hidden;
             Spawner = new DispatcherTimer();
             rng = new Random();
@@ -128,17 +131,11 @@ namespace SantaShooter
             }
             public void PlaySound(string nameAndFormat)
             {
-                /*
-                new System.Threading.Thread(() => {
-                wnd.Player.URL = Environment.CurrentDirectory + @"/Sounds/" + nameAndFormat;
-                wnd.Player.controls.play();
-                }).Start();
-                */
 
 
 
                 wnd.NoisePlayer.Stop();
-                wnd.NoisePlayer.Open(new Uri(Environment.CurrentDirectory + @"/Sounds/" + nameAndFormat));
+                wnd.NoisePlayer.Open(new Uri(@"../../Sounds/" + nameAndFormat, UriKind.Relative));
                 wnd.NoisePlayer.Play();
 
             

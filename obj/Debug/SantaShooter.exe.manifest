@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SantaShooter.exe" size="193488">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SantaShooter.exe" size="192976">
       <assemblyIdentity name="SantaShooter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aLbkj1ljJYakHoVsaMYvfLC/pUEeM+E0hZVNcQ9A3Fs=</dsig:DigestValue>
+        <dsig:DigestValue>zcOd4BR8yWSLfulQwmJruY9RCs/I81+CCsh/fahp7AY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
